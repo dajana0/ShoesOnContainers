@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 
 namespace ProductCatalogAPI.Data
 {
-    public class CatalogContext: DbContext
+    public class CatalogContext : DbContext
     {
-        public CatalogContext(DbContextOptions options): base(options)
+        public DbSet<CatalogType> CatalogTypes { get; set; }
+        public DbSet<CatalogBrand> CatalogBrands { get; set; }
+        public DbSet<CatalogItem> CatalogItems { get; set; }
+        public CatalogContext(DbContextOptions options) : base(options)
         {
 
         }
@@ -22,19 +25,47 @@ namespace ProductCatalogAPI.Data
             builder.Entity<CatalogItem>(ConfigureCatalogItem);
         }
 
-        private void ConfigureCatalogItem(EntityTypeBuilder<CatalogItem> obj)
+        private void ConfigureCatalogItem(EntityTypeBuilder<CatalogItem> builder)
         {
-            throw new NotImplementedException();
+            builder.ToTable("Catalog");
+            builder.Property(c => c.Id)
+                .ForSqlServerUseSequenceHiLo("catalog_hilo")
+                .IsRequired();
+            builder.Property(c => c.Name)
+                .IsRequired(true)
+                .HasMaxLength(50);
+            builder.Property(c => c.Price)
+                .IsRequired(true);
+            builder.Property(c => c.PictureUrl)
+                .IsRequired(false);
+            builder.HasOne(x => x.CatalogBrand)
+                .WithMany()
+                .HasForeignKey(x => x.CatalogBrandId);
+            builder.HasOne(x => x.CatalogType)
+                .WithMany()
+                .HasForeignKey(x => x.CatalogTypeId);
         }
 
-        private void ConfigureCatalogType(EntityTypeBuilder<CatalogType> obj)
+        private void ConfigureCatalogType(EntityTypeBuilder<CatalogType> builder)
         {
-            throw new NotImplementedException();
+            builder.ToTable("CatalogType");
+            builder.Property(x => x.Id)
+                .ForSqlServerUseSequenceHiLo("catalog_type_hilo")
+                .IsRequired();
+            builder.Property(c => c.Type)
+                .IsRequired()
+                .HasMaxLength(100);
         }
 
-        private void ConfigureCatalogBrand(EntityTypeBuilder<CatalogBrand> obj)
+        private void ConfigureCatalogBrand(EntityTypeBuilder<CatalogBrand> builder)
         {
-            throw new NotImplementedException();
+            builder.ToTable("CatalogBrand");
+            builder.Property(x => x.Id)
+                .ForSqlServerUseSequenceHiLo("catalog_brand_hilo")
+                .IsRequired();
+            builder.Property(c => c.Brand)
+                .IsRequired()
+                .HasMaxLength(100);
         }
     }
 }
