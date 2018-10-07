@@ -9,7 +9,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{20
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{F72D43A0-9281-4E06-B2C4-F7A0FECA4576}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductCatalogAPI", "src\ProductCatalogAPI\ProductCatalogAPI.csproj", "{4C56F1E3-DB60-45A1-B7AE-808F6D921080}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductCatalogAPI", "src\Services\ProductCatalogAPI\ProductCatalogAPI.csproj", "{4C56F1E3-DB60-45A1-B7AE-808F6D921080}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DFC3D37E-7965-40BD-A9D1-95D616D8528D}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
