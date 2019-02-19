@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ShoesOnContainers.Web.WebMvc.Infrastructure;
 using ShoesOnContainers.Web.WebMvc.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -46,6 +47,7 @@ namespace ShoesOnContainers.Web.WebMvc.Services
         public async Task<Catalog> GetCatalogItems(int page, int take, int? brand, int? type)
         {
             var allCatalogItemsUri = ApiPaths.Catalog.GetAllCatalogItems(_remoteServiceBaseUrl, page, take, brand, take);
+
             var dataString = await _apiClient.GetStringAsync(allCatalogItemsUri);
             var response = JsonConvert.DeserializeObject<Catalog>(dataString);
             return response;
